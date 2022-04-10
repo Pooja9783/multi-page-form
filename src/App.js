@@ -1,23 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React, { useContext } from "react";
+import "./App.css";
+import StepOne from "./components/StepOne";
+import StepTwo from "./components/StepTwo";
+import StepThree from "./components/StepThree";
+import Displaydata from "./components/DisplayData";
+import { Stepper, StepLabel, Step } from "@material-ui/core";
+import { MyContext } from "./StepContext";
 function App() {
+  const { currentStep, final } = useContext(MyContext);
+
+  const stepHandle = (step) => {
+    switch (step) {
+      case 1:
+        return <StepOne />;
+      case 2:
+        return <StepTwo />;
+      case 3:
+        return <StepThree />;
+    }
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <h1 style={{ color: "red", textDecoration: "underline" }}>
+        Multi-Pages-Form
+      </h1>
+      <div className="center-stepper">
+        <Stepper
+          style={{ width: "90%" }}
+          activeStep={currentStep - 1}
+          orientation="horizontal"
         >
-          Learn React
-        </a>
-      </header>
+          <Step>
+            <StepLabel></StepLabel>
+          </Step>
+          <Step>
+            <StepLabel></StepLabel>
+          </Step>
+          <Step>
+            <StepLabel></StepLabel>
+          </Step>
+        </Stepper>
+      </div>
+      {stepHandle(currentStep)}
+      {final.length > 0 ? <Displaydata /> : ""}
     </div>
   );
 }
